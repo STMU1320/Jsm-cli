@@ -1,0 +1,53 @@
+@import '../../theme/custom.less';
+
+.bgSvg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.wrap {
+  padding: 50px;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 50px;
+}
+.content {
+  text-align: center;
+  color: #18172d;
+  h1 {
+    margin: 50px 0;
+    height: 100px;
+    line-height: 1.5
+  }
+  p {
+    height: 30px;
+    line-height: 1.2;
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+}
+.routerLink{
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  width:  100px;
+  border-radius: 15px;
+  background-color: #18172d;
+  color: white;
+  // transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  &:hover {
+    color: white;
+  }
+}
+.weatherInfo{
+  position: fixed;
+  bottom: 50px;
+  left: 0;
+  z-index: 9;
+  width: 100%;
+  color: white;
+  text-align: center;
+}

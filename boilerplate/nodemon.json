@@ -1,0 +1,16 @@
+{
+  "verbose": true,
+  "watch": [
+    "webpack.config.js",
+    "config.js",
+    "webpack.dll.config.js",
+    "nodemon.json",
+    "package.json",
+    "server/index.ts"
+  ],
+  "ignore": ["build/*", "src/*"],
+  "execMap": {
+    "rb": "ruby",
+    "pde": "processing --sketch={{pwd}} --run"
+  }
+}

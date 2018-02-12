@@ -1,0 +1,11 @@
+{
+  "dist": "../build/jsm",
+  "title": "Jsm-template",
+  "description": "awesome-template",
+  "publicPath": "/static",
+  "prodPublic": "/service",
+  "hostName": "127.0.0.1",
+  "port": 8092,
+  "webpackManifestName": "webpack-manifest",
+  "webpackDllManifestName": "webpack-dll-manifest"
+}

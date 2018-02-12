@@ -1,0 +1,49 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "commonjs",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "target": "es5",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "allowJs": true,
+    // "declaration": true,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "noLib": false,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es5", "es2015", "es2016.array.include", "es2017.object"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "components": ["./src/components"],
+      "components/*": ["./src/components/*"],
+      "utils": ["./src/utils"],
+      "utils/*": ["./src/utils/*"],
+      "api": ["./src/api"],
+      "api/*": ["./src/api/*"]
+    }
+  },
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "files": [
+    // "./typings/lib.d.ts",
+  ],
+  "include": [
+    "*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "__mocks__/**/*.ts",
+    "__mocks__/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

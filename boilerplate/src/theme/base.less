@@ -1,0 +1,72 @@
+@import './custom.less';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  &:after, &:before {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-size: 12px;
+  -webkit-text-size-adjust: none;
+}
+
+body {
+  font-family: "Microsoft YaHei", "Open Sans", sans-serif, "Hiragino Sans GB", Arial, "Lantinghei SC", "5FAE8F6F96C59ED1", "STHeiti", "WenQuanYi Micro Hei", "SimSun";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  color: @text-primary;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .1) !important;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+input, textarea {
+  box-shadow: none;
+  border-radius: none;
+}
+
+a{
+  outline:0;
+  cursor:pointer;
+  text-decoration:none;
+  &:link, &:active, &:visited, &:hover{
+    text-decoration:none;
+  }
+  &:hover {
+    color: @primary;
+  }
+}
+ul {
+  li {
+    list-style: none;
+  }
+}
+
+:global {
+  .h3 {
+    font-size: 2.16rem;
+  }
+  .h4 {
+    font-size: 1.5rem;
+  }
+  
+  .icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+ }
+}
+
+

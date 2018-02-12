@@ -18,6 +18,8 @@ const rl = readline.createInterface({
 });
 const boilerplatePath = join(__dirname, '../boilerplate');
 
+console.log(boilerplatePath)
+
 function copyLog(file, cb) {
   message.success(file.path);
   cb(null, file);
@@ -38,7 +40,7 @@ function createProject(dest) {
   const spinner = ora('downloading template')
   spinner.start()
   if (fs.existsSync(boilerplatePath)) fs.emptyDirSync(boilerplatePath)
-  download(template, 'boilerplate', function (err) {
+  download(template, boilerplatePath, function (err) {
     spinner.stop()
     if (err) {
       console.log(err)
