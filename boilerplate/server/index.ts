@@ -23,11 +23,13 @@ function getValidNet(keys: any) {
   return validKey && os.networkInterfaces()[validKey];
 }
 
-let { dist, publicPath, hostName, port }: {
+let { dist, publicPath, hostName, port, mockPort, proxyPath }: {
   dist: string;
   publicPath: string;
   hostName: string;
   port: number;
+  mockPort: number,
+  proxyPath: string
 } = require<any>(joinDirname('./config.json'));
 if (!__DEV__) port += 1;
 // const entries: {
@@ -38,8 +40,8 @@ if (!__DEV__) port += 1;
 const app = express();
 
 app.use(compression());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 if (__DEV__) {
   app.use(morgan('dev'));
 
@@ -47,6 +49,7 @@ if (__DEV__) {
   const webpackHotMiddleware = require<any>('webpack-hot-middleware');
   const config = require<any>(joinDirname('./webpack.config'));
   const compiler = webpack(config);
+  const proxyMiddleWare = require('http-proxy-middleware');
   app.use(webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
     noInfo: true,
@@ -66,6 +69,11 @@ if (__DEV__) {
     }
   }));
   app.use(webpackHotMiddleware(compiler));
+  app.use('/mock', proxyMiddleWare({
+    target: `http://127.0.0.1:${mockPort}`,
+    pathRewrite: { '^/mock': '/' },
+    changeOrigin: true }));
+  app.use('/api', proxyMiddleWare({ target: proxyPath, changeOrigin: true }));
 } else {
   app.use(cors({
     origin: [`http://${hostName}:${port}`],
@@ -88,7 +96,7 @@ app.use('/', serveStatic(joinDirname(dist)));
 
 
 app.use('/', (req: express.Request, res: express.Response) => {
-  res.sendFile(joinDirname(`./${dist}/index.html`));
+  res.sendFile(joinDirname(`./${dist}${publicPath}/index.html`));
 });
 
 

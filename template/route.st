@@ -18,4 +18,4 @@ class <% name %> extends React.PureComponent<any, any> {
   }
 }
 
-export default connect((state: any) => ({ ...state.<% namespace %> }))(<% name %>);
+export default connect(({ <% namespace %> }: any) => ({ ...<% namespace %> }))(<% name %>);

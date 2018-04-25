@@ -1,10 +1,12 @@
 // import * as ExampleApi from 'api/example';
 
+const defaultState: any = {
+  loading: false
+};
+
 export default {
   namespace: '<% namespace %>',
-  state: {
-    loading: false
-  },
+  state: defaultState,
 
   effects: {
   },

@@ -12,14 +12,17 @@ const renderToDOM = (AppContainer?: new () => React.Component<any, any>, AppComp
   if (AppContainer) {
     render(
       <AppContainer>
-        <Provider store={store}>
-          <AppComponent />
-        </Provider>
+          <Provider store={store}>
+            <AppComponent />
+          </Provider>
       </AppContainer>,
       rootEl
     );
   } else {
-    render(<Provider store={store}><App /></Provider>, rootEl);
+    render(
+        <Provider store={store}>
+          <App />
+        </Provider>, rootEl);
   }
 };
 

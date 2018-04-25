@@ -6,7 +6,8 @@
     "webpack.dll.config.js",
     "nodemon.json",
     "package.json",
-    "server/index.ts"
+    "server/index.ts",
+    "mock/*"
   ],
   "ignore": ["build/*", "src/*"],
   "execMap": {

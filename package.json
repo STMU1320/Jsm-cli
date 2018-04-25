@@ -1,6 +1,6 @@
 {
   "name": "jsm-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react boilerplates",
   "main": "./bin/jsm.js",
   "scripts": {

@@ -25,6 +25,8 @@
       "components/*": ["./src/components/*"],
       "utils": ["./src/utils"],
       "utils/*": ["./src/utils/*"],
+      "common": ["./src/common"],
+      "common/*": ["./src/common/*"],
       "api": ["./src/api"],
       "api/*": ["./src/api/*"]
     }
@@ -33,9 +35,9 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "files": [
-    // "./typings/lib.d.ts",
-  ],
+  // "files": [
+  //   "./typings/lib.d.ts",
+  // ],
   "include": [
     "*.ts",
     "**/*.ts",

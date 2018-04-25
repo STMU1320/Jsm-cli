@@ -31,7 +31,7 @@ const fileWatcher = (eventType, absolutePath) => {
   const excludePattern = /node_modules/
   const pathExtname = extname(absolutePath)
   const relativePath = relative(publicDir, absolutePath)
-  let outFileName = join(__dirname, `../${dist}`, relativePath)
+  let outFileName = join(__dirname, `../${dist}${publicPath}`, relativePath)
 
   if (excludePattern.test(absolutePath)) {
     return
@@ -47,7 +47,7 @@ const fileWatcher = (eventType, absolutePath) => {
         originCode = originCode.replace(/(const\sVERSION\s=\s\")(.*)(\"\;)/g, (match, p1, p2, p3) => [p1, `${+p2.split('.').join('') + 1}`.split('').join('.'), p3].join(''))
         fs.writeFileSync(absolutePath, originCode, 'utf8')
       }
-      originCode = originCode.replace(/\/\*ReplaceStaticFiles\*\//, `"/static/vendors.${__DEV__ ? 'dev' : 'prod'}.dll.js" ,`)
+      originCode = originCode.replace(/\/\*ReplaceStaticFiles\*\//, `"${publicPath}/vendors.${__DEV__ ? 'dev' : 'prod'}.dll.js" ,`)
     }
     const codeStr = tsc.transpile(
       originCode,
@@ -99,26 +99,26 @@ if (__DEV__) {
 
 
 const manifest = __DEV__ ? null : JSON.parse(
-  fs.readFileSync(joinDirname('../', `./${dist}/${publicPath}/webpack-manifest.json`), 'utf8')
+  fs.readFileSync(joinDirname('../', `./${dist}${publicPath}/webpack-manifest.json`), 'utf8')
 )
 const vendorManifest = __DEV__ ? null : JSON.parse(
-  fs.readFileSync(joinDirname('../', `./${dist}/${publicPath}/webpack-dll-manifest.json`), 'utf8')
+  fs.readFileSync(joinDirname('../', `./${dist}${publicPath}/webpack-dll-manifest.json`), 'utf8')
 )
 
 const ejs = require('ejs')
 const name = 'app'
 fs.writeFileSync(
-  joinDirname(`../${dist}/index.html`),
+  joinDirname(`../${dist}${publicPath}/index.html`),
   ejs.render(
     fs.readFileSync(joinDirname('../src/views/index.ejs'), 'utf8'),
     {
       __DEV__,
       title,
       description,
-      name: __DEV__ ? `${publicPath}/js/${name}.js` : `/${publicPath}/${manifest[`${name}.js`]}`,
+      name: __DEV__ ? `${publicPath}/js/${name}.js` : `${publicPath}/${manifest[`${name}.js`]}`,
       proxy: __DEV__ ? `http://${hostName}:${port}` : '',
-      common: __DEV__ ? `${publicPath}/js/common.js` : `/${publicPath}/${manifest['common.js']}`,
-      vendor: __DEV__ ? `${publicPath}/vendor.dev.dll.js` : `/${publicPath}/${vendorManifest['vendor.js']}`
+      common: __DEV__ ? `${publicPath}/js/common.js` : `${publicPath}/${manifest['common.js']}`,
+      vendor: __DEV__ ? `${publicPath}/vendor.dev.dll.js` : `${publicPath}/${vendorManifest['vendor.js']}`
     }
   )
 )

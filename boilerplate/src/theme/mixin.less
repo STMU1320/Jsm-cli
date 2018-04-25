@@ -1,4 +1,8 @@
-@import './cutom.less';
+@import './custom.less';
+
+@border-1px: 1px solid @border-color;
+@box-shadow-dark: 0px 2px 4px 0px rgba(0, 0, 0, .1);;
+@box-shadow-light: 0 0 25px 2px rgba(0, 0, 0, .08);
 
 .ellipsis{
   overflow: hidden;
@@ -13,24 +17,30 @@
   overflow: hidden;
 }
 
+.panel-base-style {
+  padding: 1rem @spacing-base;
+  background-color: white;
+}
+
 .content-base-width {
-  width: 1200px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .content-base-height {
-  min-height: calc(~"100vh - 224px")
+  min-height: 50vh;
 }
 
-.content-base-padding {
-  padding-left:  calc(~"50% - 600px");
-  padding-right:  calc(~"50% - 600px");
+.content-base-style {
+  // .content-base-height;
+  margin: @spacing-base;
+  background-color: white;
+  padding: @spacing-base;
+  border-radius: 5px;
+  position: relative;
+  box-sizing: content-box;
+  box-shadow: 0 0 8px 0px rgba(0, 0, 0, .05);
 }
 
-@box-shadow-dark: 0px 2px 15px 4px rgba(0, 0, 0, 0.08);
-@box-shadow-light: 0 0 25px 2px rgba(0, 0, 0, .08);
-
-@border-1px: 1px solid @border-color;
 
 // 动画
 .transition-ease-out (@prop: all, @time: .3s) {

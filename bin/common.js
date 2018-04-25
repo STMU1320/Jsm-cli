@@ -43,4 +43,14 @@ function mkdir(path, fn) {
   });
 }
 
-module.exports={ copyTemplate, write, mkdir, message, sep }
+function exportCodeGenerator(type, options) {
+  let code = '';
+  if (type === 'component') {
+    code = `export { default as ${options.uppercaseName} } from './${options.uppercaseName}';\r\n`;
+  } else {
+    code = `export { default as ${options.name} } from './routes/${options.uppercaseName}/model';\r\n`;
+  }
+  return code
+}
+
+module.exports={ copyTemplate, write, mkdir, message, sep, exportCodeGenerator }

@@ -7,7 +7,7 @@ const statelessFile = 'Stateless.st';
 const routeFile = 'route.st';
 const modelFile = 'model.st';
 const styleFile = 'style.st';
-const {copyTemplate, write, mkdir, message, sep } = common;
+const {copyTemplate, write, mkdir, message, sep, exportCodeGenerator } = common;
 
 function camelCaseFn(str) {
   return `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`;
@@ -36,7 +36,8 @@ function findPkgPath (dir) {
 
 function createComponent(dir, params) {
   const cmName = params.name;
-  const cmPath = `${dir}${sep}${camelCaseFn(cmName)}`;
+  const cmNameUppercase = camelCaseFn(cmName);
+  const cmPath = `${dir}${sep}${cmNameUppercase}`;
   const fileName = getFileName({ name: 'index', suffix: 'tsx' });
   const templateFile = params.state ? stateFile : statelessFile;
   const content = params.content || 'Jsm component';
@@ -48,13 +49,19 @@ function createComponent(dir, params) {
     .ensureDir(cmPath)
     .then(() => {
       copyTemplate(`${templatePath}${templateFile}`, `${cmPath}/${fileName}`, {
-        name: fileName.split('.')[0],
+        name: cmNameUppercase,
         content,
       });
       message.success('Create component success!');
       message.success(` cd to '${cmPath}' check it`);
       console.log()
-      process.exit(0)
+      try {
+        fs.appendFileSync(`${dir}${sep}/index.ts`, exportCodeGenerator('component', {  name: cmName, uppercaseName: cmNameUppercase }));
+      } catch (error) {
+        message.error('Can\'t append to index.ts file, maybe this file non-existent!')
+      } finally {
+        process.exit(0)
+      }
     })
     .catch(err => {
       console.log(err);
@@ -65,7 +72,8 @@ function createComponent(dir, params) {
 
 function createRoute(dir, params) {
   const namespace = params.name;
-  const routePath = `${dir}${sep}${camelCaseFn(namespace)}`;
+  const namespaceUppercase = camelCaseFn(namespace);
+  const routePath = `${dir}${sep}${namespaceUppercase}`;
   const routeName = getFileName({name: 'index', suffix: 'tsx'});
   const styleName = getFileName({name: 'style', suffix: 'less'});
   const modelName = getFileName({name: 'model', suffix: 'ts'});
@@ -98,7 +106,16 @@ function createRoute(dir, params) {
       message.success('Create route success!');
       message.success(` cd to '${routePath}' check it`);
       console.log();
-      process.exit(0)
+
+      try {
+        const rootModelFile = path.join(path.dirname(dir), './model.ts');
+        console.log(rootModelFile)
+        fs.appendFileSync(rootModelFile, exportCodeGenerator('model', {  name: namespace, uppercaseName: namespaceUppercase }));
+      } catch (error) {
+        message.error('Can\'t append to model.ts file, maybe this file non-existent!')
+      } finally {
+        process.exit(0)
+      }
     })
     .catch(err => {
       console.log(err);

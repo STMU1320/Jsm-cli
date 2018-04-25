@@ -10,7 +10,6 @@ const __DEV__ = process.env.NODE_ENV !== 'production'
 const {
   dist,
   publicPath,
-  prodPublic,
   hostName,
   port,
   webpackManifestName
@@ -47,18 +46,14 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(dist),
-    publicPath: __DEV__ ? `${publicPath}/` : `${prodPublic}${publicPath}/`,
+    path: path.resolve(`${dist}${publicPath}`),
+    publicPath: publicPath,
     filename: `js/[name]${__DEV__ ? '' : '.[hash:5]'}.js`,
     chunkFilename: `js/[name]${__DEV__ ? '' : '.[chunkhash:5]'}.js`
   },
   resolve: {
     extensions: ['.webpack.js', '.js', '.jsx', '.ts', '.tsx', '.less'],
-    modules: ['./node_modules', './src'],
-    alias: {
-      'react': path.resolve(__dirname, 'node_modules/react'),
-      'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
-    }
+    modules: ['./node_modules', './src']
   },
   resolveLoader: {
     moduleExtensions: ['-loader']
@@ -76,13 +71,12 @@ module.exports = {
         use: {
           loader: 'awesome-typescript',
           query: {
-            configFileName: path.resolve(__dirname, './tsconfig.json'),
             useBabel: __DEV__,
             useCache: __DEV__,
             useTranspileModule: __DEV__,
             forkChecker: __DEV__,
             cacheDirectory: __DEV__
-              ? `${dist}${publicPath}/awesomeTypescriptCacheDev`
+              ? `${dist}/${publicPath}/awesomeTypescriptCacheDev`
               : void 0
           }
         }
@@ -153,7 +147,7 @@ module.exports = {
     }),
     new webpack.DllReferencePlugin({
       context: `./${dist}`,
-      manifest: require(`./${dist}${publicPath}/webpack-vendor-manifest${__DEV__ ? '.dev' : '.prod'}.json`)
+      manifest: require(`./${dist}/${publicPath}/webpack-vendor-manifest${__DEV__ ? '.dev' : '.prod'}.json`)
     })
   ].concat(
     __DEV__
